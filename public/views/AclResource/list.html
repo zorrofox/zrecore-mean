@@ -1,0 +1,28 @@
+<section data-ng-controller="AclResourceController" data-ng-init="find()">
+    <table class="table table-striped aclRoleTable">
+        <thead>
+        <tr>
+            <th>资源</th>
+            <th>URL</th>
+            <th>父资源</th>
+            <th>有效？</th>
+            <th>创建日期</th>
+            <th>修改日期</th>
+            <th>失效日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="rec in AclResources">
+            <td><a data-ng-href="#!/AclResource/{{rec._id}}">{{rec.resource_name}}</a></td>
+            <td>{{rec.resource_url}}</td>
+            <td>{{rec.father_resource}}</td>
+            <td>{{rec.is_active | boolean}}</td>
+            <td>{{rec.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{rec.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{rec.timestamp_deactivated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="#!/AclResource/create">创建角色</a>
+    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有角色！ <br> 你为什么不 <a href="/#!/AclResource/create">创建</a>一个?</h1>
+</section>

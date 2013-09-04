@@ -4,3 +4,4 @@ window.app.factory("Global", function(){
 
 	return _this._data;
 });
+

@@ -3,7 +3,6 @@ var mongoose = require("mongoose"),
     ObjectId = Schema.ObjectId;
 
 var UserAclSchema = new Schema({
-    "id": ObjectId,
     "user_id": {
         "type": ObjectId,
         "required": true
@@ -39,6 +38,6 @@ UserAclSchema.index({
     "resource_id": 1,
     "permission_id": 1
 }, {"unique": true});
-UserAclSchema.index({"timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1});
+//UserAclSchema.index({"timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1});
 
 module.exports = mongoose.model("UserAcl", UserAclSchema);

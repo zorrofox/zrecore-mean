@@ -1,0 +1,18 @@
+<section data-ng-controller="AclRoleController" data-ng-init="findOne()">
+    <form data-ng-submit="update()" class="aclRoleForm">
+        <div class="form-group">
+            <label for="RoleName" class="control-label">角色</label>
+            <input type="text" class="form-control" data-ng-model="aclRole.role_name" id="RoleName" placeholder="角色名">
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label><input type="checkbox" data-ng-model="aclRole.is_active" id="IsActive">有效</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary">
+            <a  href="/#!/AclRole" class="btn btn-default">角色列表</a>
+        </div>
+
+    </form>
+</section>

@@ -1,0 +1,22 @@
+<section data-ng-controller="AclRoleController" data-ng-init="find()">
+    <table class="table table-striped aclRoleTable">
+        <thead>
+        <tr>
+            <th>角色</th>
+            <th>有效?</th>
+            <th>创建日期</th>
+            <th>修改日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="aclRole in aclRoles">
+            <td><a data-ng-href="#!/AclRole/{{aclRole._id}}">{{aclRole.role_name}}</a></td>
+            <td>{{aclRole.is_active | boolean}}</td>
+            <td>{{aclRole.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{aclRole.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="#!/AclRole/create">创建角色</a>
+    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有角色！ <br> 你为什么不 <a href="/#!/AclRole/create">创建</a>一个?</h1>
+</section>

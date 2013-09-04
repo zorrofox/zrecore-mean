@@ -79,11 +79,6 @@ var OrderSchema = new Schema({
         "required": false
     },
 
-    "merchant_key": {
-        "type": String,
-        "required": true
-    },
-
     "timestamp_added": {
         "type": Date,
         "default": Date.now,
@@ -119,7 +114,6 @@ OrderSchema.index({
     "currency_id": 1,
     "status_history_id": 1,
     "merchant_gateway_id": 1,
-    "merchant_key": 1,
     "timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1
 });
 

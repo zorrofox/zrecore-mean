@@ -3,7 +3,6 @@ var mongoose = require("mongoose"),
     ObjectId = Schema.ObjectId;
 
 var AclPermissionSchema = new Schema({
-	"id": ObjectId,
 	"permission_name": {
         "type": String,
         "required": true,
@@ -30,9 +29,7 @@ var AclPermissionSchema = new Schema({
 		"type": Date,
 		"required": false
 	}
-}, {
-	"autoIndex": false
 });
 
-AclPermissionSchema.index({"permission_name": 1, "is_active": 1, "timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1});
+//AclPermissionSchema.index({"permission_name": 1, "is_active": 1, "timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1});
 module.exports = mongoose.model("AclPermission", AclPermissionSchema);

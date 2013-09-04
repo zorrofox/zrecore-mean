@@ -35,8 +35,8 @@ function ArticlesController($scope, $routeParams, $location, Global, Articles) {
 
 	$scope.find = function (query) {
 		Articles.query(query, function (articles) {
-			$scope.articles = articles;
-		});
+            $scope.articles = articles;
+        });
 	};
 
 	$scope.findOne = function () {
