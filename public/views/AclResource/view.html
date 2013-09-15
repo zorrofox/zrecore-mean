@@ -6,6 +6,10 @@
             <td>{{AclResource.resource_name}}</td>
         </tr>
         <tr>
+            <td>资源描述：</td>
+            <td>{{AclResource.resource_desc}}</td>
+        </tr>
+        <tr>
             <td>链接URL：</td>
             <td>{{AclResource.resource_url}}</td>
         </tr>
@@ -32,5 +36,5 @@
           </tbody>
     </table>
     <a  href="/#!/AclResource/{{AclResource._id}}/edit" class="btn btn-primary">编辑{{AclResource.role_name}}</a>
-    <a  href="/#!/AclResource" class="btn btn-default">角色列表</a>
+    <a  href="/#!/AclResource" class="btn btn-default">资源列表</a>
 </section>

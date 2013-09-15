@@ -3,22 +3,22 @@
         <tbody>
         <tr>
             <td>角色名：</td>
-            <td>{{aclRole.role_name}}</td>
+            <td>{{AclRole.role_name}}</td>
         </tr>
         <tr>
             <td>有效？：</td>
-            <td>{{aclRole.is_active | boolean}}</td>
+            <td>{{AclRole.is_active | boolean}}</td>
         </tr>
         <tr>
             <td>创建时间：</td>
-            <td>{{aclRole.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{AclRole.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
         <tr>
             <td>修改时间：</td>
-            <td>{{aclRole.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{AclRole.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
           </tbody>
     </table>
-    <a  href="/#!/AclRole/{{aclRole._id}}/edit" class="btn btn-primary">编辑{{aclRole.role_name}}</a>
+    <a  href="/#!/AclRole/{{AclRole._id}}/edit" class="btn btn-primary">编辑{{AclRole.role_name}}</a>
     <a  href="/#!/AclRole" class="btn btn-default">角色列表</a>
 </section>

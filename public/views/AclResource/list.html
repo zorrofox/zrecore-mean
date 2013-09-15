@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>资源</th>
+            <th>资源描述</th>
             <th>URL</th>
             <th>父资源</th>
             <th>有效？</th>
@@ -12,8 +13,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="rec in AclResources">
+        <tr data-ng-repeat="rec in AclResource">
             <td><a data-ng-href="#!/AclResource/{{rec._id}}">{{rec.resource_name}}</a></td>
+            <td>{{rec.resource_desc}}</td>
             <td>{{rec.resource_url}}</td>
             <td>{{rec.father_resource}}</td>
             <td>{{rec.is_active | boolean}}</td>
@@ -23,6 +25,6 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="#!/AclResource/create">创建角色</a>
-    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有角色！ <br> 你为什么不 <a href="/#!/AclResource/create">创建</a>一个?</h1>
+    <a class="btn btn-primary" href="#!/AclResource/create">创建资源</a>
+    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有资源！ <br> 你为什么不 <a href="/#!/AclResource/create">创建</a>一个?</h1>
 </section>

@@ -2,11 +2,19 @@
     <form data-ng-submit="update()" class="aclRoleForm">
         <div class="form-group">
             <label for="ResourceName" class="control-label">资源</label>
-            <input type="text" class="form-control" data-ng-model="aclRole.role_name" id="ResourceName" placeholder="角色名">
+            <input type="text" class="form-control" data-ng-model="AclResource.resource_name" id="ResourceName" placeholder="资源名">
+        </div>
+        <div class="form-group">
+            <label for="ResourceDesc" class="control-label">资源描述</label>
+            <input type="text" class="form-control" data-ng-model="AclResource.resource_desc" id="ResourceDesc" placeholder="资源描述">
+        </div>
+        <div class="form-group">
+            <label for="ResourceUrl" class="control-label">资源链接</label>
+            <input type="url" class="form-control" data-ng-model="AclResource.resource_url" id="ResourceUrl" placeholder="资源链接">
         </div>
         <div class="form-group">
             <div class="checkbox">
-                <label><input type="checkbox" data-ng-model="aclRole.is_active" id="IsActive">有效</label>
+                <label><input type="checkbox" data-ng-model="AclResource.is_active" id="IsActive">有效</label>
             </div>
         </div>
         <div class="form-group">

@@ -7,8 +7,12 @@ var AclResourceSchema = new Schema({
         "type": String,
         "required": true,
         "unique": true,
-        // "lowercase": true,
         "trim": true
+    },
+    resource_desc:{
+        type:String,
+        require:true,
+        unique:true
     },
     "resource_url": {
         "type": String,

@@ -28,7 +28,8 @@
     "underscore": "latest",
     "async": "latest",
     "view-helpers": "latest",
-    "mean-logger": "latest"
+    "mean-logger": "latest",
+     "bcrypt":"latest"
   },
   "devDependencies": {
     "supertest": "latest",

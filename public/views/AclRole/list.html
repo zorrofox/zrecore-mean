@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="aclRole in aclRoles">
+        <tr data-ng-repeat="aclRole in AclRole">
             <td><a data-ng-href="#!/AclRole/{{aclRole._id}}">{{aclRole.role_name}}</a></td>
             <td>{{aclRole.is_active | boolean}}</td>
             <td>{{aclRole.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -18,5 +18,5 @@
         </tbody>
     </table>
     <a class="btn btn-primary" href="#!/AclRole/create">创建角色</a>
-    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有角色！ <br> 你为什么不 <a href="/#!/AclRole/create">创建</a>一个?</h1>
+    <h1 data-ng-hide="!AclRole || AclRole.length">还没有角色！ <br> 你为什么不 <a href="/#!/AclRole/create">创建</a>一个?</h1>
 </section>

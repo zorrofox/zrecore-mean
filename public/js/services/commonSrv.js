@@ -6,11 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 
-commonDataSrv('AclResources');
+commonDataSrv('AclResource');
+commonDataSrv('AclRole');
 
 
 function commonDataSrv(dataSchema) {
-    var id = dataSchema + "Id";
 
     return window.app.factory(dataSchema, function ($resource) {
 
@@ -24,8 +24,8 @@ function commonDataSrv(dataSchema) {
             return angular.fromJson(data).data;
         };
         var params = {};
-        params[id] = "@_id";
-        return $resource(dataSchema.substr(0, dataSchema.length - 1) + "/:" + id, params, actions);
+        params[dataSchema + "Id"] = "@_id";
+        return $resource(dataSchema + "/:" + dataSchema + "Id", params, actions);
     });
 
 }

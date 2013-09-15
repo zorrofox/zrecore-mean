@@ -8,12 +8,12 @@ window.app.config(['$routeProvider', function ($routeProvider) {
         when('/', { templateUrl: 'views/index.html' }).
         when('/AclRole',{templateUrl:'views/AclRole/list.html'}).
         when('/AclRole/create', { templateUrl: 'views/AclRole/create.html' }).
-        when('/AclRole/:aclRoleId/edit', { templateUrl: 'views/AclRole/edit.html' }).
-        when('/AclRole/:aclRoleId', { templateUrl: 'views/AclRole/view.html' }).
+        when('/AclRole/:AclRoleId/edit', { templateUrl: 'views/AclRole/edit.html' }).
+        when('/AclRole/:AclRoleId', { templateUrl: 'views/AclRole/view.html' }).
         when('/AclResource',{templateUrl:'views/AclResource/list.html'}).
         when('/AclResource/create', { templateUrl: 'views/AclResource/create.html' }).
-        when('/AclResource/:AclResourcesId/edit', { templateUrl: 'views/AclResource/edit.html' }).
-        when('/AclResource/:AclResourcesId', { templateUrl: 'views/AclResource/view.html' }).
+        when('/AclResource/:AclResourceId/edit', { templateUrl: 'views/AclResource/edit.html' }).
+        when('/AclResource/:AclResourceId', { templateUrl: 'views/AclResource/view.html' }).
         otherwise({redirectTo: '/'});
 }]);
 
