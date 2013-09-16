@@ -6,24 +6,18 @@
  * To change this template use File | Settings | File Templates.
  */
 
-/*var nowHash = document.location.hash;
- if (nowHash.substr(0,2) =="#!") {
- console.log(nowHash.substring(3));
- commonControl(nowHash.substring(3));
- }*/
+commonControl("AclResListController", "AclResource");
+commonControl("AclResourceController","AclResource");
+commonControl("AclRoleController", "AclRole");
 
-commonControl("AclResource");
-commonControl("AclRole");
+function commonControl(controller, dataSchema) {
 
-function commonControl(dataSchema) {
-
-
-    return window.app.controller(dataSchema + "Controller", ["$scope", "$routeParams", "$location", "Global", dataSchema, function ($scope, $routeParams, $location, Global, dataObj) {
+    return window.app.controller(controller, ["$scope", "$routeParams", "$location", "Global", dataSchema, function ($scope, $routeParams, $location, Global, dataObj) {
 
         $scope.global = Global;
 
         $scope.create = function () {
-            if(!Global.authenticated){
+            if (!Global.authenticated) {
                 $location.url("/");
                 return;
             }
@@ -33,8 +27,6 @@ function commonControl(dataSchema) {
                     obj[p] = this[p];
             }
             var rec = new dataObj(obj);
-
-            console.log(this);
 
             rec.$save(function (response) {
                 $location.path(dataSchema + "/" + response.data._id);
@@ -54,14 +46,33 @@ function commonControl(dataSchema) {
 
         $scope.findOne = function () {
             var query = {};
-            query[dataSchema + "Id"] = $routeParams[dataSchema + "Id"]
+            query[dataSchema + "Id"] = $routeParams[dataSchema + "Id"];
+
             dataObj.get(query, function (rec) {
                 $scope[dataSchema] = rec;
             });
         };
 
+        $scope.findOneBy = function (queryId) {
+            var query = {};
+            console.log(queryId);
+            if(queryId){
+                if(queryId[dataSchema + "Id"] == undefined){
+                    return;
+                }else{
+                    query[dataSchema + "Id"] = queryId[dataSchema + "Id"];
+                }
+            }else{
+                return;
+            }
+
+            dataObj.get(query, function (rec) {
+                $scope[dataSchema + "One"] = rec;
+            });
+        };
+
         $scope.remove = function (data) {
-            if(!Global.authenticated){
+            if (!Global.authenticated) {
                 $location.url("/");
                 return;
             }
@@ -75,7 +86,7 @@ function commonControl(dataSchema) {
         };
 
         $scope.update = function () {
-            if(!Global.authenticated){
+            if (!Global.authenticated) {
                 $location.url("/");
                 return;
             }

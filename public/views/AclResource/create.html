@@ -16,7 +16,7 @@
             <label for="FatherResource" class="control-label">父资源</label>
             <select class="form-control" data-ng-model="father_resource" id="FatherResource">
                 <optgroup label="选择资源" data-ng-controller="AclResourceController" data-ng-init="find()">
-                    <option data-ng-repeat="rec in AclResource | filter:{resource_name:resource_name}:true" value="{{rec._id}}">{{rec.resource_name}}</option>
+                    <option data-ng-repeat="rec in AclResource | filterEx: {'resource_name':resource_name}" value="{{rec._id}}">{{rec.resource_name}}</option>
                 </optgroup>
             </select>
         </div>

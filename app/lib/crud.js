@@ -7,6 +7,7 @@ module.exports.list = function (mModel, req, res, next) {
     var skip = !_.isUndefined(req.header('API-SKIP')) ? req.header('API-SKIP') : null;
     var sort = !_.isUndefined(req.header('API-SORT')) ? req.header('API-SORT') : null;
 
+
     var query = mModel.find(searchQuery);
 
 

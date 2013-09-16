@@ -20,7 +20,8 @@ var AclResourceSchema = new Schema({
         "unique": true
     },
     "father_resource": {
-        "type": ObjectId
+        "type": ObjectId,
+        reference: "AclResource"
     },
     "is_active": {
         "type": Boolean,

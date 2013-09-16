@@ -12,7 +12,7 @@
     "tag": "v1.2.0-rc.1",
     "commit": "0108a715eeab5f35ea76b1c198b015458d3a3e91"
   },
-  "_source": "git://github.com/angular/bower-angular-resource.git",
+  "_source": "https://github.com/angular/bower-angular-resource.git",
   "_target": "1.2.0-rc.1",
   "_originalSource": "angular-resource"
 }

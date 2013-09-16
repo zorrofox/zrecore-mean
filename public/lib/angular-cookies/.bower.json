@@ -12,7 +12,7 @@
     "tag": "v1.2.0-rc.1",
     "commit": "96fa5511c457dd3d5fff602c77c19ac56e2ce006"
   },
-  "_source": "git://github.com/angular/bower-angular-cookies.git",
+  "_source": "https://github.com/angular/bower-angular-cookies.git",
   "_target": "1.2.0-rc.1",
   "_originalSource": "angular-cookies"
 }
