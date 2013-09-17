@@ -24,16 +24,19 @@ window.app.filter('filterEx', function () {
     }
 });
 
-window.app.filter('getAclResource', function ($resource) {
+
+window.app.filter('aclResource', function ($resource) {
     return function (input) {
-        var out = "";
-        var res = $resource("AclResource/:AclResourceId", {AclResourceId:input});
-        var rec = res.get(function(){
-           return;
-        });
-
-        out = rec.resource_name;
-        return out;
-
-    }
+        if (input) {
+            var res = $resource("AclResource/:AclResourceId", {AclResourceId: "@_id"});
+            var out = "";
+            res.get({AclResourceId: input}, function (rec) {
+                input = rec.data.resource_name;
+            });
+            return out;
+        }
+        else {
+            return "";
+        }
+    };
 });

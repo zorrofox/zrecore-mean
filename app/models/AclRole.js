@@ -33,7 +33,17 @@ var AclRoleSchema = new Schema({
     "timestamp_deactivated": {
         "type": Date,
         "required": false
-    }
+    },
+    acl_resources:[{
+        type:ObjectId,
+        ref:"AclResource"
+    }]
 });
+
+AclRoleSchema.statics = {
+    load: function (id, cb) {
+        this.findOne({ _id : id }).populate('inherit_role_id').populate('acl_resources').exec(cb);
+    }
+};
 
 module.exports = mongoose.model("AclRole", AclRoleSchema);

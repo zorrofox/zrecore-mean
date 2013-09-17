@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-commonControl("AclResListController", "AclResource");
-commonControl("AclResourceController","AclResource");
+commonControl("AclResourceController", "AclResource");
 commonControl("AclRoleController", "AclRole");
+commonControl("AclResListController", "AclResource")
 
 function commonControl(controller, dataSchema) {
 
@@ -22,8 +22,9 @@ function commonControl(controller, dataSchema) {
                 return;
             }
             var obj = {};
+
             for (p in this) {
-                if ((typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
+                if ((angular.isArray(this[p]) || typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
                     obj[p] = this[p];
             }
             var rec = new dataObj(obj);
@@ -35,12 +36,20 @@ function commonControl(controller, dataSchema) {
             for (p in this) {
                 if ((typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
                     this[p] = "";
+                if (angular.isArray(this[p]))
+                    this[p] = [];
             }
         };
 
         $scope.find = function (query) {
             dataObj.query(query, function (data) {
                 $scope[dataSchema] = data;
+            });
+        };
+
+        $scope.findList = function (query) {
+            dataObj.query(query, function (data) {
+                $scope[dataSchema + "List"] = data;
             });
         };
 
@@ -53,16 +62,12 @@ function commonControl(controller, dataSchema) {
             });
         };
 
+
         $scope.findOneBy = function (queryId) {
             var query = {};
-            console.log(queryId);
-            if(queryId){
-                if(queryId[dataSchema + "Id"] == undefined){
-                    return;
-                }else{
-                    query[dataSchema + "Id"] = queryId[dataSchema + "Id"];
-                }
-            }else{
+            if (queryId) {
+                query[dataSchema + "Id"] = queryId;
+            } else {
                 return;
             }
 
@@ -92,11 +97,23 @@ function commonControl(controller, dataSchema) {
             }
             var rec = $scope[dataSchema];
             rec.timestamp_modified = new Date().getTime();
-
             rec.$update(function () {
                 $location.path(dataSchema + '/' + rec.data._id);
             });
         };
+
+
+        $scope.inList = function (val, arrObj) {
+            var arr = [];
+
+                for (c in arrObj) {
+                    arr.push(arrObj[c]._id);
+                }
+                return $.inArray(val, arr);
+
+
+        }
+
 
     }]);
 

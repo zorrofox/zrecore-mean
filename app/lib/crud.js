@@ -7,7 +7,6 @@ module.exports.list = function (mModel, req, res, next) {
     var skip = !_.isUndefined(req.header('API-SKIP')) ? req.header('API-SKIP') : null;
     var sort = !_.isUndefined(req.header('API-SORT')) ? req.header('API-SORT') : null;
 
-
     var query = mModel.find(searchQuery);
 
 
@@ -43,20 +42,38 @@ module.exports.list = function (mModel, req, res, next) {
 
 module.exports.get = function (mModel, req, res, next) {
     var id = !_.isUndefined(req.params.id) ? req.params.id : null;
-    mModel.findById(id, function (err, records) {
 
-        if (err) {
-            res.send({
-                result: 'error',
-                message: err.toString()
-            });
-        } else {
-            res.send({
-                result: 'ok',
-                data: records
-            });
-        }
-    });
+    if (mModel.load) {
+        mModel.load(id, function (err, records) {
+
+            if (err) {
+                res.send({
+                    result: 'error',
+                    message: err.toString()
+                });
+            } else {
+                res.send({
+                    result: 'ok',
+                    data: records
+                });
+            }
+        });
+    } else {
+        mModel.findById(id, function (err, records) {
+
+            if (err) {
+                res.send({
+                    result: 'error',
+                    message: err.toString()
+                });
+            } else {
+                res.send({
+                    result: 'ok',
+                    data: records
+                });
+            }
+        });
+    }
 
     return next;
 };
@@ -129,7 +146,7 @@ module.exports.post = function (mModel, req, res, next) {
 
     } else {
         // Create
-        
+
         var newModel = new mModel(data);
         newModel.save(function (err, m) {
 
@@ -169,7 +186,7 @@ module.exports.del = function (mModel, req, res, next) {
     return next;
 };
 
-module.exports.setUpServer = function(server, routeURI, route) {
+module.exports.setUpServer = function (server, routeURI, route) {
     server.get(routeURI, route.list);
     server.get(routeURI + '/:id', route.get);
 

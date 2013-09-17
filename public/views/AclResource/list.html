@@ -17,7 +17,7 @@
             <td><a data-ng-href="#!/AclResource/{{rec._id}}">{{rec.resource_name}}</a></td>
             <td>{{rec.resource_desc}}</td>
             <td>{{rec.resource_url}}</td>
-            <td data-ng-controller="AclResourceController" data-ng-init="findOneBy({AclResourceId:rec.father_resource})">{{AclResourceOne.resource_name}}</td>
+            <td data-ng-controller="AclResourceController" data-ng-init="findOneBy(rec.father_resource)">{{AclResourceOne.resource_name}}</td>
             <td>{{rec.is_active | boolean}}</td>
             <td>{{rec.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{rec.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>

@@ -21,7 +21,7 @@ var AclResourceSchema = new Schema({
     },
     "father_resource": {
         "type": ObjectId,
-        reference: "AclResource"
+        ref: "AclResource"
     },
     "is_active": {
         "type": Boolean,
@@ -44,5 +44,10 @@ var AclResourceSchema = new Schema({
     }
 });
 
-//AclResourceSchema.index({"resource_name": 1, "is_active": 1, "timestamp_added": 1, "timestamp_modified": 1, "timestamp_deactivated": 1});
+AclResourceSchema.statics = {
+    load: function (id, cb) {
+        this.findOne({ _id : id }).populate('father_resource').exec(cb);
+    }
+};
+
 module.exports = mongoose.model("AclResource", AclResourceSchema);

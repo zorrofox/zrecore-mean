@@ -6,6 +6,10 @@
             <td>{{AclRole.role_name}}</td>
         </tr>
         <tr>
+            <td>资源：</td>
+            <td><li data-ng-repeat="AclResource in AclRole.acl_resources">{{AclResource.resource_name}}</li></td>
+        </tr>
+        <tr>
             <td>有效？：</td>
             <td>{{AclRole.is_active | boolean}}</td>
         </tr>
