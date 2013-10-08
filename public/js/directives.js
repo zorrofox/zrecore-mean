@@ -1,15 +1,26 @@
-window.app.directive('aclResource', function ($resource) {
+window.app.directive('aclResource', function (AclResource) {
     return function (scope, element, attrs) {
-        var out = {};
-        var res = $resource('AclResource/:Id',{Id: '@_id'});
-       var resId = "";//scope.AclResource.father_resource;
-        scope.aa = "dddddddddddddd";
-        console.log(scope.$eval(element.attr("data-acl-resource")))
-        console.log();
-        res.get({Id:resId},function (rec) {
-            //element.text("BBBB");
-            //console.log(rec);
+        scope.$watch(attrs.aclResource, function (value) {
+            if (value) {
+                AclResource.get({AclResourceId: value}, function (rec) {
+                    element.text(rec.resource_name);
+                });
+            }
         });
-
     };
 });
+
+window.app.directive('menu', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            loc: '@location',
+            menus: '='
+        },
+        link: function($scope, $element) {
+
+        },
+        templateUrl : "template/menus/menus.html"
+    };
+})

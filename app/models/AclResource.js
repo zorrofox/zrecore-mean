@@ -3,26 +3,30 @@ var mongoose = require("mongoose"),
     ObjectId = Schema.ObjectId;
 
 var AclResourceSchema = new Schema({
-    "resource_name": {
+    "resource_code": {
         "type": String,
         "required": true,
         "unique": true,
-        "trim": true
+        "trim": true,
+        uppercase:true
     },
-    resource_desc:{
-        type:String,
-        require:true,
-        unique:true
+    resource_name: {
+        type: String,
+        require: true,
+        unique: true
+    },
+    resource_order: {
+        type: Number,
+        require: true
     },
     "resource_url": {
         "type": String,
-        "require": true,
-        "unique": true
+        "require": false
     },
-    "father_resource": {
+    "children_resource": [{
         "type": ObjectId,
         ref: "AclResource"
-    },
+    }],
     "is_active": {
         "type": Boolean,
         "required": true,
@@ -42,11 +46,25 @@ var AclResourceSchema = new Schema({
         "type": Date,
         "required": false
     }
+},{
+    toObject: {virtuals: true},
+    toJSON: {virtuals:true}
+});
+
+AclResourceSchema.virtual("_hasChildren").get(function(){
+    return (this.children_resource)?((this.children_resource).length > 0):(this.children_resource);
 });
 
 AclResourceSchema.statics = {
-    load: function (id, cb) {
-        this.findOne({ _id : id }).populate('father_resource').exec(cb);
+    /*load: function (id, cb) {
+        this.findOne({ _id: id }).populate('father_resource').exec(cb);
+    },*/
+    loadQuery: function (query) {
+        return this.find(query).populate('father_resource');
+    },
+    updateMiddleWare: function(data){
+        if (data.father_resource !=undefined && data.father_resource == "")
+           data.father_resource = null;
     }
 };
 

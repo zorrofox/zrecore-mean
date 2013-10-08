@@ -1,21 +1,22 @@
 <section data-ng-controller="AclResourceController" data-ng-init="findOne()">
+
     <table class="table table-striped aclRoleTable">
         <tbody>
         <tr>
-            <td>资源名：</td>
-            <td>{{AclResource.resource_name}}</td>
+            <td>资源代码：</td>
+            <td>{{AclResource.resource_code}}</td>
         </tr>
         <tr>
-            <td>资源描述：</td>
-            <td>{{AclResource.resource_desc}}</td>
+            <td>资源名称：</td>
+            <td>{{AclResource.resource_name}}</td>
         </tr>
         <tr>
             <td>链接URL：</td>
             <td>{{AclResource.resource_url}}</td>
         </tr>
         <tr>
-            <td >父资源：</td>
-            <td>{{AclResource.father_resource.resource_name}}</td>
+            <td >子资源：</td>
+            <td acl-resource="AclResource.children_resource"><li data-ng-repeat="rec in AclResource.children_resource" data-acl-resource="rec">{{rec}}</li></td>
         </tr>
         <tr>
             <td>有效？：</td>

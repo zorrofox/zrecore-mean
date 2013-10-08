@@ -8,6 +8,8 @@
 
 commonDataSrv('AclResource');
 commonDataSrv('AclRole');
+commonDataSrv('AclPermission');
+commonDataSrv('AclUser');
 
 
 function commonDataSrv(dataSchema) {
@@ -16,13 +18,19 @@ function commonDataSrv(dataSchema) {
 
         var actions = {
             update: {method: 'PUT'},
-            query: {isArray: true, method: 'GET', transformResponse: transf},
-            get: {method: 'GET', transformResponse: transf, isArray: false}
+            query: {method: 'GET', transformResponse: res},
+            get: {method: 'GET', transformResponse: resData}
         };
 
-        function transf(data) {
+        function res(data) {
+            return angular.fromJson(data);
+        }
+
+        function resData(data){
             return angular.fromJson(data).data;
-        };
+        }
+
+
         var params = {};
         params[dataSchema + "Id"] = "@_id";
         return $resource(dataSchema + "/:" + dataSchema + "Id", params, actions);

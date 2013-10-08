@@ -7,7 +7,7 @@ var AclPermissionSchema = new Schema({
         "type": String,
         "required": true,
         "unique": true,
-        "lowercase": true,
+        "uppercase": true,
         "trim": true
     },
 	"is_active": {

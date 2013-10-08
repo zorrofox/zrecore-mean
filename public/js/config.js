@@ -14,6 +14,14 @@ window.app.config(['$routeProvider', function ($routeProvider) {
         when('/AclResource/create', { templateUrl: 'views/AclResource/create.html' }).
         when('/AclResource/:AclResourceId/edit', { templateUrl: 'views/AclResource/edit.html' }).
         when('/AclResource/:AclResourceId', { templateUrl: 'views/AclResource/view.html' }).
+        when('/AclPermission',{templateUrl:'views/AclPermission/list.html'}).
+        when('/AclPermission/create', { templateUrl: 'views/AclPermission/create.html' }).
+        when('/AclPermission/:AclPermissionId/edit', { templateUrl: 'views/AclPermission/edit.html' }).
+        when('/AclPermission/:AclPermissionId', { templateUrl: 'views/AclPermission/view.html' }).
+        when('/User',{templateUrl:'views/User/list.html'}).
+        when('/User/create', { templateUrl: 'views/User/create.html' }).
+        when('/User/:UserId/edit', { templateUrl: 'views/User/edit.html' }).
+        when('/User/:UserId', { templateUrl: 'views/User/view.html' }).
         otherwise({redirectTo: '/'});
 }]);
 

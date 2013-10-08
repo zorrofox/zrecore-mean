@@ -8,13 +8,16 @@
 
 commonControl("AclResourceController", "AclResource");
 commonControl("AclRoleController", "AclRole");
-commonControl("AclResListController", "AclResource")
+commonControl("AclPermissionController", "AclPermission");
+commonControl("UserController", "User");
 
 function commonControl(controller, dataSchema) {
 
     return window.app.controller(controller, ["$scope", "$routeParams", "$location", "Global", dataSchema, function ($scope, $routeParams, $location, Global, dataObj) {
 
         $scope.global = Global;
+
+        $scope.alerts = [];
 
         $scope.create = function () {
             if (!Global.authenticated) {
@@ -23,35 +26,44 @@ function commonControl(controller, dataSchema) {
             }
             var obj = {};
 
-            for (p in this) {
+            for (var p in this) {
                 if ((angular.isArray(this[p]) || typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
                     obj[p] = this[p];
             }
             var rec = new dataObj(obj);
-
             rec.$save(function (response) {
-                $location.path(dataSchema + "/" + response.data._id);
+
+                if (response.result == "ok") {
+                    $scope.alerts = [];
+                    $location.path(dataSchema + "/" + response.data._id);
+
+                } else {
+                    $scope.alerts.push({type: 'danger', msg: "创建失败，错误信息为：" + response.message});
+                }
             });
 
-            for (p in this) {
-                if ((typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
-                    this[p] = "";
-                if (angular.isArray(this[p]))
-                    this[p] = [];
+            if (this.alerts.length <= 0) {
+                for (var p in this) {
+                    if ((typeof(this[p]) == "string" || typeof(this[p]) == "number" || typeof(this[p]) == "boolean" || typeof(this[p]) == "undefined") && p.substr(0, 1) != "$")
+                        this[p] = "";
+                    if (angular.isArray(this[p]) && p.substr(0, 1) != "$") {
+                        this[p] = [];
+                    }
+                }
             }
+        };
+
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
         };
 
         $scope.find = function (query) {
             dataObj.query(query, function (data) {
-                $scope[dataSchema] = data;
+                $scope[dataSchema] = data.data;
+                $scope.totalItems = data.pagination.count;
             });
         };
 
-        $scope.findList = function (query) {
-            dataObj.query(query, function (data) {
-                $scope[dataSchema + "List"] = data;
-            });
-        };
 
         $scope.findOne = function () {
             var query = {};
@@ -60,20 +72,16 @@ function commonControl(controller, dataSchema) {
             dataObj.get(query, function (rec) {
                 $scope[dataSchema] = rec;
             });
-        };
 
+        };
 
         $scope.findOneBy = function (queryId) {
             var query = {};
-            if (queryId) {
-                query[dataSchema + "Id"] = queryId;
-            } else {
-                return;
-            }
-
+            query[dataSchema + "Id"] =queryId;
             dataObj.get(query, function (rec) {
                 $scope[dataSchema + "One"] = rec;
             });
+
         };
 
         $scope.remove = function (data) {
@@ -81,11 +89,17 @@ function commonControl(controller, dataSchema) {
                 $location.url("/");
                 return;
             }
-            data.$remove();
+            var query = {};
+            query[dataSchema + "Id"] = data._id;
+
+            dataObj.get(query, function (rec) {
+                rec.$remove();
+            });
+
 
             for (var i in $scope[dataSchema]) {
-                if ($scope[dataSchema][i] == aclRole) {
-                    $scope[dataSchema].splice(i, 1)
+                if ($scope[dataSchema][i] == data) {
+                    $scope[dataSchema].splice(i, 1);
                 }
             }
         };
@@ -95,25 +109,24 @@ function commonControl(controller, dataSchema) {
                 $location.url("/");
                 return;
             }
+            var orig = {};
             var rec = $scope[dataSchema];
+            angular.copy(rec, orig);
+            console.log(orig);
             rec.timestamp_modified = new Date().getTime();
             rec.$update(function () {
-                $location.path(dataSchema + '/' + rec.data._id);
+                if (rec.result == "ok" || rec._id) {
+                    $scope.alerts = [];
+                    console.log(rec);
+                    $location.path(dataSchema + "/" + ((rec._id) ? rec._id : rec.data._id));
+                } else {
+                    $scope.alerts.push({type: 'danger', msg: "更新失败，错误信息为：" + rec.message});
+                    $scope[dataSchema] = orig;
+                }
+
+
             });
         };
-
-
-        $scope.inList = function (val, arrObj) {
-            var arr = [];
-
-                for (c in arrObj) {
-                    arr.push(arrObj[c]._id);
-                }
-                return $.inArray(val, arr);
-
-
-        }
-
 
     }]);
 

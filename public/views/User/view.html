@@ -1,0 +1,24 @@
+<section data-ng-controller="AclPermissionController" data-ng-init="findOne()">
+    <table class="table table-striped aclRoleTable">
+        <tbody>
+        <tr>
+            <td>许可名：</td>
+            <td>{{AclPermission.permission_name}}</td>
+        </tr>
+        <tr>
+            <td>有效？：</td>
+            <td>{{AclPermission.is_active | boolean}}</td>
+        </tr>
+        <tr>
+            <td>创建时间：</td>
+            <td>{{AclPermission.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <td>修改时间：</td>
+            <td>{{AclPermission.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+          </tbody>
+    </table>
+    <a  href="/#!/AclPermission/{{AclPermission._id}}/edit" class="btn btn-primary">编辑{{AclPermission.permission_name}}</a>
+    <a  href="/#!/AclPermission" class="btn btn-default">许可列表</a>
+</section>

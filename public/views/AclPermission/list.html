@@ -1,0 +1,24 @@
+<section data-ng-controller="AclPermissionController" data-ng-init="find()">
+    <div data-ng-hide="!AclPermission || AclPermission.length < 1">
+    <table class="table table-striped aclRoleTable">
+        <thead>
+        <tr>
+            <th>许可名</th>
+            <th>有效?</th>
+            <th>创建日期</th>
+            <th>修改日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="rec in AclPermission">
+            <td><a data-ng-href="#!/AclPermission/{{rec._id}}">{{rec.permission_name}}</a></td>
+            <td>{{rec.is_active | boolean}}</td>
+            <td>{{rec.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{rec.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="#!/AclPermission/create">创建许可</a>
+    </div>
+    <h1 data-ng-hide="!AclPermission || AclPermission.length">还没有许可！ <br> 你为什么不 <a href="/#!/AclPermission/create">创建</a>一个?</h1>
+</section>

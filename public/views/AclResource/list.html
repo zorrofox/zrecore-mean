@@ -1,30 +1,45 @@
-<section data-ng-controller="AclResourceController" data-ng-init="find()">
-    <table class="table table-striped aclRoleTable">
-        <thead>
-        <tr>
-            <th>资源</th>
-            <th>资源描述</th>
-            <th>URL</th>
-            <th>父资源</th>
-            <th>有效？</th>
-            <th>创建日期</th>
-            <th>修改日期</th>
-            <th>失效日期</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-ng-repeat="rec in AclResource">
-            <td><a data-ng-href="#!/AclResource/{{rec._id}}">{{rec.resource_name}}</a></td>
-            <td>{{rec.resource_desc}}</td>
-            <td>{{rec.resource_url}}</td>
-            <td data-ng-controller="AclResourceController" data-ng-init="findOneBy(rec.father_resource)">{{AclResourceOne.resource_name}}</td>
-            <td>{{rec.is_active | boolean}}</td>
-            <td>{{rec.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>{{rec.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>{{rec.timestamp_deactivated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <a class="btn btn-primary" href="#!/AclResource/create">创建资源</a>
-    <h1 data-ng-hide="!aclRoles || aclRoles.length">还没有资源！ <br> 你为什么不 <a href="/#!/AclResource/create">创建</a>一个?</h1>
+<section data-ng-controller="AclResourceController" data-ng-init="pageSize = 10; find({'API-LIMIT':pageSize})">
+    <div data-ng-hide="!AclResource || AclResource.length < 1">
+        <table class="table table-striped table-hover aclRoleTable">
+            <thead>
+            <tr>
+                <th>资源代码</th>
+                <th>资源名称</th>
+                <th>菜单顺序</th>
+                <th>资源URL</th>
+                <th>子资源</th>
+                <th>有效？</th>
+                <th>创建日期</th>
+                <th>修改日期</th>
+                <th>失效日期</th>
+                <th>删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="rec in AclResource">
+                <td><a data-ng-href="#!/AclResource/{{rec._id}}">{{rec.resource_code}}</a></td>
+                <td>{{rec.resource_name}}</td>
+                <td>{{rec.resource_order}}</td>
+                <td>{{rec.resource_url}}</td>
+                <td><li data-ng-repeat="p in rec.children_resource" data-acl-resource="p">{{p}}</li></td>
+                <td>{{rec.is_active | boolean}}</td>
+                <td>{{rec.timestamp_added | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{rec.timestamp_modified | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{rec.timestamp_deactivated | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td><a href="" data-ng-click="remove(rec)"><span class="glyphicon glyphicon-trash"></span></a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <pagination data-ng-if="totalItems > pageSize" boundary-links="true"
+                        total-items="totalItems" page="currentPage" class="pagination-sm"
+                        items-per-page="pageSize"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                        on-select-page="find({'API-LIMIT':pageSize, 'API-PAGE': page})"></pagination>
+        </div>
+        <a class="btn btn-primary" href="#!/AclResource/create">创建资源</a>
+    </div>
+
+    <h1 data-ng-hide="!AclResource || AclResource.length">还没有资源！ <br> 你为什么不 <a href="/#!/AclResource/create">创建</a>一个?
+    </h1>
 </section>

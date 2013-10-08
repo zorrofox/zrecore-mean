@@ -39,12 +39,13 @@ var UserSchema = new Schema({
         "type": Date,
         "required": false
     },
-    "acl_role_id": {
-        "type": ObjectId,
+    "acl_role_id": [{
+       "type": ObjectId,
         "required": true,
-        default:"5232d117bb28bacc38000002"
-    }
-})
+        ref: "AclRole"
+    }]
+}
+)
 
 /**
  * Virtuals

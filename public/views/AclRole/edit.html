@@ -10,7 +10,7 @@
                     data-ng-controller="AclResourceController" data-ng-init="find();"
                     data-ng-model="AclRole.acl_resources" id="ResourceNames" multiple data-placeholder="选择资源">
 
-                <option data-ng-repeat="rec in AclResource" data-ng-selected="inList(rec._id, AclRole.acl_resources)"
+                <option data-ng-repeat="rec in AclResource"
                         value="{{rec._id}}">{{rec.resource_name}}
                 </option>
 

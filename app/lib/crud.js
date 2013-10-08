@@ -7,11 +7,23 @@ module.exports.list = function (mModel, req, res, next) {
     var skip = !_.isUndefined(req.header('API-SKIP')) ? req.header('API-SKIP') : null;
     var sort = !_.isUndefined(req.header('API-SORT')) ? req.header('API-SORT') : null;
 
-    var query = mModel.find(searchQuery);
+    limit = !_.isUndefined(req.param('API-LIMIT')) ? req.param('API-LIMIT') : null;
+    skip = !_.isUndefined(req.param('API-SKIP')) ? req.param('API-SKIP') : null;
+    sort = !_.isUndefined(req.param('API-SORT')) ? req.param('API-SORT') : null;
+    var page = !_.isUndefined(req.param('API-PAGE')) ? req.param('API-PAGE') : null;
 
+
+    if(mModel.loadQuery){
+        var query =  mModel.loadQuery(searchQuery);
+    }else{
+        var query = mModel.find(searchQuery);
+    }
 
     if (!_.isNull(limit)) query.limit(limit);
     if (!_.isNull(sort)) query.sort(sort);
+    if(!_.isNull(page) && _.isNull(skip) && !_.isNull(limit)){
+        skip = (page - 1) * limit;
+    }
     if (!_.isNull(skip)) query.skip(skip);
 
     query.exec(function (err, records) {
@@ -93,6 +105,10 @@ module.exports.put = function (mModel, req, res, next) {
     if (id) {
         var data = req.body;
         delete data._id;
+
+        if(mModel.updateMiddleWare){
+            mModel.updateMiddleWare(data);
+        }
 
         mModel.findByIdAndUpdate(id, {$set: data}, function (err, record) {
             if (err) {
